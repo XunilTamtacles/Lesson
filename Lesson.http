@@ -6,5 +6,10 @@ Accept: application/json
 ###
 
 
-GET {{Lesson_HostAddress}}/api/Registration
+GET {{Lesson_HostAddress}}/api/Registration/v1/GetSampleData
+Accept: application/json
+###
+
+
+GET {{Lesson_HostAddress}}/api/Registration/v2/GetSampleData
 Accept: application/json
