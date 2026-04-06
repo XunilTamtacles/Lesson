@@ -19,4 +19,9 @@
     </PackageReference>
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="Models\NewFolder\" />
+    <Folder Include="NewFolder\" />
+  </ItemGroup>
+
 </Project>
