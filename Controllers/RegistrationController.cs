@@ -17,12 +17,16 @@ namespace Lesson.Controllers
         [HttpGet("v2/GetSampleData")]
         public IActionResult GetAnotherSampleData()
         {
-            if (!Request.Header.TryGetValue("X-API-KEY", out var extractedAPIKEY))
+            if (!Request.Headers.TryGetValue("X-API-KEY", out var extractedAPIKEY))
             {
                 return Unauthorized();
                     
             }
             return Ok(new { Status = true, Guid = Guid.NewGuid(), Version = 2 });
+           
+            {
+                return Unauthorized();
+            }
         }
 
 
