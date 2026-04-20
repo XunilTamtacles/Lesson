@@ -14,3 +14,7 @@ Accept: application/json
 GET {{Lesson_HostAddress}}/api/Registration/v2/GetSampleData
 Accept: application/json
 X-API-KEY: MYAPIKEY
+###
+GET {{Lesson_HostAddress}}/api/Registration/v2/GetSampleData
+Accept: application/json
+X-API-KEY: ApiKeyExpiration
