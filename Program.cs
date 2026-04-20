@@ -46,6 +46,18 @@ namespace Lesson
                         });
 
                 });
+                options.AddPolicy("RoleBasedPolicy", context =>
+                {
+                    var role = context.User?.FindFirst(System.Security.Claims.Claim)?.Value;
+                    return RateLimitPartition.GetFixedWindowLimiter(
+                        partitionKey: role ?? "anonymous",
+                        factory: _ => new FixedWindowRateLimiterOptions
+                        {
+                            PermitLimit = 5,
+                            QueueLimit = 0,
+                            Window = TimeSpan.FromMinutes(5)
+                        });
+                });
             });
 
             builder.Services.AddAuthorization();
