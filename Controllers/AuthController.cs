@@ -3,15 +3,13 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.RateLimiting;
 using Lesson.Models;
-using Lesson.Utils;
 
-using Microsoft.AspNetCore.RateLimiting;
-using SampleAPI.Models;
 
 namespace Lesson.Controllers
 {
     [Route("/api/[controller]")]
     [ApiController]
+    [ApiKeyClassAuthorize]
     public class AuthController : ControllerBase
     {
         private readonly JwtService _jwtService = new JwtService();

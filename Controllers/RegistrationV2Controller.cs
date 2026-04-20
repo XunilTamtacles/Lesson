@@ -1,12 +1,13 @@
-﻿using Microsoft.AspNetCore.Http;
+﻿using Lesson.Utils;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
-using Lesson.Utils;
+using Microsoft.AspNetCore.RateLimiting;
 
 namespace Lesson.Controllers
 {
     [Route("api/v2/Registration")]
     [ApiController]
-    [ApiKeyAuthorize]
+    [ApiKeyClassAuthorize]
     public class RegistrationV2Controller : ControllerBase
     {
         [HttpGet("GetSampleData")]
