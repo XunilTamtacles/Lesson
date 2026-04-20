@@ -1,7 +1,4 @@
-
-using Lesson.Utils;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
-using Microsoft.Extensions.Options;
 using Microsoft.IdentityModel.Tokens;
 using System.Text;
 using System.Threading.RateLimiting;
@@ -14,7 +11,8 @@ namespace Lesson
         {
             var builder = WebApplication.CreateBuilder(args);
 
-            var jwtKey = "TVL_TOKEN_KEY";
+            var jwtKey = "9f3c7a1d5e2b8c4f6a9d0e7b3c1f5a8d";
+
             builder.Services.AddAuthentication(options =>
             {
                 options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
@@ -29,27 +27,28 @@ namespace Lesson
                     ValidateAudience = false,
                     ValidateLifetime = true,
                     ValidateIssuerSigningKey = true,
-                    IssuerSigningKey = new  SymmetricSecurityKey(Encoding.UTF8.GetBytes(jwtKey))
-
+                    IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(jwtKey))
                 };
             });
 
-            builder.Services.AddRateLimiter(options => 
+            builder.Services.AddRateLimiter(options =>
             {
                 options.AddPolicy("PerAPIKey", context =>
                 {
+                    var apiKey = context.Request.Headers["X-API-KEY"].ToString();
                     return RateLimitPartition.GetFixedWindowLimiter(
-                        partitionKey: "anonymus", //apiKey ?? "anonymus",
+                        partitionKey: apiKey ?? "anonymous",
                         factory: _ => new FixedWindowRateLimiterOptions
                         {
                             PermitLimit = 5,
                             QueueLimit = 0,
                             Window = TimeSpan.FromMinutes(5)
                         });
+
                 });
             });
 
-            builder.Services.Configure<JwtSettings>(builder.Configuration.GetSection("JwtSettings"));
+            builder.Services.AddAuthorization();
 
             // Add services to the container.
 
@@ -67,9 +66,11 @@ namespace Lesson
 
             app.UseHttpsRedirection();
 
-            app.UseAuthorization();
-            app.UseRateLimiter();
             app.UseAuthentication();
+
+            app.UseAuthorization();
+
+            app.UseRateLimiter();
 
 
 

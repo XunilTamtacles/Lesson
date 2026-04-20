@@ -1,35 +1,17 @@
-﻿using Microsoft.AspNetCore.Http;
+﻿
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Lesson.Controllers
 {
-    [Route("api/[controller]")]
+    [Route("api/v1/Registration")]
     [ApiController]
     public class RegistrationController : ControllerBase
     {
-        [HttpGet("v1/GetSampleData")]
+        [HttpGet("GetSampleData")]
         public IActionResult GetSampleData()
         {
-            
-            return Ok(new { Status = true, Guid = Guid.NewGuid() });
+            return Ok(new { Status = true, GUID = Guid.NewGuid() });
         }
-
-        [HttpGet("v2/GetSampleData")]
-        public IActionResult GetAnotherSampleData()
-        {
-            if (!Request.Headers.TryGetValue("X-API-KEY", out var extractedAPIKEY))
-            {
-                return Unauthorized();
-                    
-            }
-            return Ok(new { Status = true, Guid = Guid.NewGuid(), Version = 2 });
-           
-            {
-                return Unauthorized();
-            }
-        }
-
-
-  
     }
 }
